@@ -1,0 +1,109 @@
+<html manifest="sincewhen.appcache">
+<head>
+<title>sinceWhen</title>
+<link rel="icon" href="icon512.png">
+<link rel="apple-touch-icon" href="icon512.png">
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background: #ddd;
+  text-align: center;
+}
+h1, p {
+  margin: 0;
+  padding: 0.25em;
+}
+h1 {
+  background: #aaa;
+  font-size: 150%;
+  font-weight: normal;
+  box-shadow: 0px 0px 1em rgba(0, 0, 0, 1);
+  margin-bottom: 1em;
+  text-align: left;
+}
+h1 img {
+  height: 2em;
+  width: 2em;
+  vertical-align: middle;
+}
+pre {
+  margin: 0.5em 0;
+}
+.data {
+  font-size: 7vw;
+  font-family: monospace;
+}
+.buttons {
+  position: absolute;
+  bottom: 1em;
+  width: 100%;
+}
+button, select {
+  padding: 0.25em;
+  font-size: 120%;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
+}
+button {
+  text-align: center;
+  width: 90%;
+  margin: 0.25em;
+  max-width: 70vh;
+  background: grey linear-gradient(to bottom, silver, white);
+  border-radius: 0.5em;
+  border-style: outset;
+  boeder-color: white;
+}
+.green {
+  background: limegreen linear-gradient(to bottom, green, limegreen);
+  color: white;
+  border-style: outset;
+  border-color: limegreen;
+}
+button:active {
+  border-style: inset;
+  background: linear-gradient(to bottom, grey, silver);
+}
+button.green:active {
+  background: linear-gradient(to bottom, darkgreen, green);
+}
+.hidden {
+  display: none;
+}
+</style>
+<script src="sincewhen.js"></script>
+</head>
+<body>
+<div id="main" class="page">
+<h1>
+<img src="icon512.png">
+sinceWhen
+</h1>
+<p>
+Most recent
+<select id="type" class="hidden">
+<option value="">time recorded</option>
+</select>
+:
+</p>
+<pre id="date" class="data">
+----:--:--  --:--:--
+</pre>
+<pre id="ago" class="data">
+-- -- --:--:--  ago
+</pre>
+<div class="buttons">
+<button id="now" class="green">Now</button>
+<button id="history" class="hidden">History...</button>
+</div<
+</div>
+</body>
+<script>
+
+
+</script>
+</html>

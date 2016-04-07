@@ -1,0 +1,18 @@
+{
+	"short_name": "sinceWhen",
+	"name": "sinceWhen",
+	"icons": [
+		{
+			"src": "icon512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		},
+		{
+			"src": "icon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml"
+		}
+	],
+	"start_url": "/index.html",
+	"display": "standalone"
+}
