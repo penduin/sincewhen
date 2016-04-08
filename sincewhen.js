@@ -77,7 +77,7 @@ function showdata(data) {
 	if(timer) {
 		clearTimeout(timer);
 	}
-	if(data.date) {
+	if(data && data.date) {
 		var date = new Date(data.date);
 		var now = new Date();
 		var str = [
@@ -99,6 +99,9 @@ function showdata(data) {
 			pad((now - date) / 1000 % 60), "  ago"
 		].join("");
 		document.querySelector("#ago").innerHTML = str;
+	} else {
+		document.querySelector("#date").innerHTML = "----------  --:--:--";
+		document.querySelector("#ago").innerHTML = "--- -- --:--:--  ago";
 	}
 	timer = setTimeout(function() {
 		showdata(data);
@@ -110,7 +113,7 @@ function now() {
 		date: new Date()
 	};
 	addlog(data);
-	showdata(data);
+	load();
 }
 
 function showpage(e) {
@@ -128,6 +131,8 @@ function load() {
 	var log = loadlog();
 	if(log.length) {
 		showdata(log[log.length - 1]);
+	} else {
+		showdata();
 	}
 }
 
