@@ -16,7 +16,7 @@ body {
 }
 h1, p {
   margin: 0;
-  padding: 0.25em;
+  padding: 0.2em;
 }
 h1 {
   background: #aaa;
@@ -27,21 +27,33 @@ h1 {
   text-align: left;
 }
 h1 img {
-  height: 2em;
-  width: 2em;
+  height: 1.5em;
+  width: 1.5em;
   vertical-align: middle;
-}
-pre {
-  margin: 0.5em 0;
 }
 .data {
   font-size: 7vw;
-  font-family: monospace;
 }
 .buttons {
-  position: absolute;
-  bottom: 1em;
+  position: fixed;
+  bottom: 0;
   width: 100%;
+  background: #ddd;
+  box-shadow: 0px -1em 1em rgba(221, 221, 221, 1);
+  padding-bottom: 1em;
+}
+.scroll {
+  margin-bottom: 6em;
+}
+.log {
+  text-align: left;
+  padding: 0.5em;
+  border: 1px solid grey;
+  border-radius: 0.5em;
+  margin: 0.5em;
+}
+.clear {
+  clear: both;
 }
 button, select {
   padding: 0.25em;
@@ -58,11 +70,17 @@ button {
   border-style: outset;
   boeder-color: white;
 }
-.green {
+button.green {
   background: limegreen linear-gradient(to bottom, green, limegreen);
   color: white;
-  border-style: outset;
   border-color: limegreen;
+}
+button.delete {
+  float: right;
+  margin: 0;
+  width: 2em;
+  background: red linear-gradient(to bottom, darkred, red);
+  border-color: red;
 }
 button:active {
   border-style: inset;
@@ -71,6 +89,9 @@ button:active {
 button.green:active {
   background: linear-gradient(to bottom, darkgreen, green);
 }
+button.delete:active {
+  background: linear-gradient(to bottom, darkred, black);
+}
 .hidden {
   display: none;
 }
@@ -78,6 +99,7 @@ button.green:active {
 <script src="sincewhen.js"></script>
 </head>
 <body>
+
 <div id="main" class="page">
 <h1>
 <img src="icon512.png">
@@ -90,17 +112,30 @@ Most recent
 </select>
 :
 </p>
-<pre id="date" class="data">
-----:--:--  --:--:--
-</pre>
-<pre id="ago" class="data">
--- -- --:--:--  ago
-</pre>
+<p id="date" class="data">
+----------  --:--:--
+</p>
+<p id="ago" class="data">
+--- -- --:--:--  ago
+</p>
 <div class="buttons">
 <button id="now" class="green">Now</button>
-<button id="history" class="hidden">History...</button>
-</div<
+<button class="show_history">History...</button>
 </div>
+</div>
+
+<div id="history" class="page hidden">
+<h1>
+<img src="icon512.png">
+sinceWhen - History
+</h1>
+<div id="log" class="scroll">
+</div>
+<div class="buttons">
+<button class="show_main">Done</button>
+</div>
+</div>
+
 </body>
 <script>
 
