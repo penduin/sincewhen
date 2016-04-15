@@ -1,8 +1,8 @@
 <html manifest="sincewhen.appcache">
 <head>
 <title>sinceWhen</title>
-<link rel="icon" sizes="512x512" href="icon512.png">
-<link rel="apple-touch-icon" href="icon512.png">
+<link rel="icon" sizes="196x196" href="icon196.png">
+<link rel="apple-touch-icon" href="icon196.png">
 <link rel="manifest" href="manifest.json">
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -43,9 +43,9 @@ h1 img {
   padding-bottom: 1em;
 }
 .scroll {
-  margin-bottom: 6em;
+  margin-bottom: 9em;
 }
-.log {
+.log, .tag {
   text-align: left;
   padding: 0.5em;
   border: 1px solid grey;
@@ -102,13 +102,14 @@ button.delete:active {
 
 <div id="main" class="page">
 <h1>
-<img src="icon512.png">
+<img src="icon196.png">
 sinceWhen
 </h1>
 <p>
 Most recent
-<select id="type" class="hidden">
+<select id="type">
 <option value="">time recorded</option>
+<option value="_labels" class="last">add/edit labels...</option>
 </select>
 :
 </p>
@@ -132,6 +133,19 @@ sinceWhen - History
 <div id="log" class="scroll">
 </div>
 <div class="buttons">
+<button class="show_main">Done</button>
+</div>
+</div>
+
+<div id="labels" class="page hidden">
+<h1>
+<img src="icon512.png">
+sinceWhen - Labels
+</h1>
+<div id="tag" class="scroll">
+</div>
+<div class="buttons">
+<button id="addlabel">Add...</button>
 <button class="show_main">Done</button>
 </div>
 </div>
