@@ -1,21 +1,8 @@
 var timer = null;
 
 function loadlog() {
-/*
-			if(window.localStorage) {
-				localStorage.removeItem("fieldState");
-			this.fieldState = localStorage.getItem("fieldState");
-			if(this.fieldState) {
-				this.fieldState = Json.evaluate(this.fieldState, true);
-			if(window.localStorage) {
-				window.localStorage.setItem("actionState",
-											Json.toString(that.actionState));
-			}
-*/
 	var log = [];
-	if(window.localStorage) {
-		log = JSON.parse(localStorage.getItem("sincewhen_log") || "[]");
-	}
+	log = JSON.parse(localStorage.getItem("sincewhen_log") || "[]");
 
 	var i = 0;
 	var elm = document.querySelector("#log");
@@ -36,14 +23,14 @@ function loadlog() {
 		button.addEventListener("click", function(e) {
 			var id = parseInt(e.target.title.replace("Delete item ", ""), null);
 			log.splice(id, 1);
-			if(window.localStorage) {
-				localStorage.setItem("sincewhen_log", JSON.stringify(log));
-			}
+			localStorage.setItem("sincewhen_log", JSON.stringify(log));
 			load();
 		});
 		div.appendChild(button);
 		date = new Date(log[i].date);
 		div.appendChild(document.createTextNode(date.toLocaleString()));
+		div.appendChild(document.createElement("br"));
+		div.appendChild(document.createTextNode(log[i].label || ""));
 		clear = document.createElement("div");
 		clear.className = "clear";
 		div.appendChild(clear);
@@ -59,9 +46,85 @@ function loadlog() {
 function addlog(item) {
 	var log = loadlog();
 	log.push(item);
-	if(window.localStorage) {
-		localStorage.setItem("sincewhen_log", JSON.stringify(log));
+	localStorage.setItem("sincewhen_log", JSON.stringify(log));
+}
+
+function loadlabels() {
+	var tag = [];
+	tag = JSON.parse(localStorage.getItem("sincewhen_tag") || "[]");
+
+	var picker = document.querySelector("#type");
+	var option = null;
+	while(option = picker.querySelector("option.custom")) {
+		picker.removeChild(option);
 	}
+
+	var i = 0;
+	var elm = document.querySelector("#tag");
+	while(elm.firstChild) {
+		elm.removeChild(elm.firstChild);
+	}
+	var div = null;
+	var clear = null;
+	var button = null;
+	for(i = 0; i < tag.length; ++i) {
+		div = document.createElement("div");
+		div.className = "tag";
+		button = document.createElement("button");
+		button.className = "delete";
+		button.innerHTML = "X";
+		button.title = "Delete item " + i;
+		button.addEventListener("click", function(e) {
+			var id = parseInt(e.target.title.replace("Delete item ", ""), null);
+			tag.splice(id, 1);
+			localStorage.setItem("sincewhen_tag", JSON.stringify(tag));
+			load();
+		});
+		div.appendChild(button);
+		div.appendChild(document.createTextNode(tag[i]));
+		clear = document.createElement("div");
+		clear.className = "clear";
+		div.appendChild(clear);
+		elm.appendChild(div);
+
+		option = document.createElement("option");
+		option.className = "custom";
+		option.value = tag[i];
+		option.appendChild(document.createTextNode(tag[i]));
+		picker.insertBefore(option, picker.querySelector(".last"));
+	}
+	if(i < 1) {
+		elm.appendChild(document.createTextNode("No labels."));
+	}
+
+	picker.value = localStorage.getItem("sincewhen_filter") || "";
+
+	return tag;
+}
+
+function addlabel() {
+	var item = prompt("New label name");
+	if(!item) {
+		return;
+	}
+	if(item === "_labels") {
+		alert("Can't add a label called '_labels'.  Sorry!");
+		return;
+	}
+	var tag = loadlabels();
+	tag.push(item);
+	localStorage.setItem("sincewhen_tag", JSON.stringify(tag));
+	loadlabels();
+}
+
+function picklabel(e) {
+	if(this.value === "_labels") {
+		showpage({target: {className: "show_labels"}});
+		document.querySelector("#type").value = localStorage.getItem("sincewhen_filter") || "";
+		return;
+	}
+	localStorage.setItem("sincewhen_filter", this.value);
+	load();
 }
 
 function pad(num, len) {
@@ -110,7 +173,8 @@ function showdata(data) {
 
 function now() {
 	var data = {
-		date: new Date()
+		date: new Date(),
+		label: localStorage.getItem("sincewhen_filter") || ""
 	};
 	addlog(data);
 	load();
@@ -129,11 +193,19 @@ function showpage(e) {
 
 function load() {
 	var log = loadlog();
+	var filt = localStorage.getItem("sincewhen_filter") || "";
+	if(filt) {
+		log = log.filter(function(item) {
+			return item.label && item.label === filt;
+		});
+	}
 	if(log.length) {
 		showdata(log[log.length - 1]);
 	} else {
 		showdata();
 	}
+
+	loadlabels();
 }
 
 window.addEventListener("load", function() {
@@ -144,4 +216,7 @@ window.addEventListener("load", function() {
 	for(i = 0; i < btns.length; ++i) {
 		btns[i].addEventListener("click", showpage);
 	}
+
+	document.querySelector("#type").addEventListener("change", picklabel);
+	document.querySelector("#addlabel").addEventListener("click", addlabel);
 });
