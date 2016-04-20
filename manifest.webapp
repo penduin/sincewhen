@@ -7,7 +7,7 @@
 	"start_url": "/index.html",
 	"icons": {
 		"512": "/icon512.png",
-		"196": "/icon196.png"
+		"196": "/icon196.png",
 		"128": "/icon128.png"
 	},
 	"developer": {
