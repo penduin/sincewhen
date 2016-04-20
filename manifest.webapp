@@ -1,6 +1,7 @@
 {
 	"short_name": "sinceWhen",
 	"name": "sinceWhen",
+	"version": "1.0",
 	"description": "How long since last time?",
 	"launch_path": "/index.html",
 	"start_url": "/index.html",
