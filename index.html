@@ -112,7 +112,7 @@ button.delete:active {
 
 <div id="main" class="page">
 <h1>
-<img src="icon196.png">
+<img src="icon196.png" onclick="install();">
 sinceWhen
 </h1>
 <p>
@@ -161,6 +161,7 @@ sinceWhen - Labels
 </div>
 
 <script>
+function install() {
         var installRequest = navigator.mozApps.install("http://sincewhen.penduin.net/manifest.webapp");
         installRequest.onsuccess = function(data) {
             // App installed successfully!
@@ -172,6 +173,7 @@ sinceWhen - Labels
             console.log(this.error);
             console.log(this.error.name);
         };
+}
 /*
 var app = navigator.mozApps.getSelf();
 app.onsuccess = function() {
