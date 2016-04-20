@@ -162,44 +162,13 @@ sinceWhen - Labels
 
 </body>
 <script>
-	if(window.location.host === "sincewhen.penduin.net" &&
-	   window.navigator && window.navigator.mozApps) {
-		var request = window.navigator.mozApps.getInstalled();
-		var that = this;
-		request.onsuccess = function () {
-			var found = false;
-			var i = 0;
-			if(request.result && request.result.length) {
-				for(i = 0; i < request.result.length; i++) {
-					if(request.result[i] && request.result[i].manifest &&
-					   request.result[i].manifest.name === "sinceWhen") {
-						found = true;
-					}
-				}
-			}
-			if(!found) {
-				that.installUrl = (
-					location.href.substring(0, location.href.lastIndexOf("/")) +
-					"/manifest.webapp"
-				);
-				that.doIt = function() {
-					try {
-						var req2 = navigator.mozApps.install(that.installUrl);
-						req2.onsuccess = function(data) {
-						};
-						req2.onerror = function() {
-						};
-					} catch (error) {
-						that.error = error;
-					}
-				};
-				that.doIt();
-			} else {
-			}
-		};
-		request.onerror = function (error) {
-			that.error = error;
-		};
-	}
+var installRequest = navigator.mozApps.install("http://sincewhen.penduin.net/manifest.webapp");
+installRequest.onsuccess = function(data) {
+    // App installed successfully!
+};
+installRequest.onerror = function(err) {
+    // App couldn't be installed!
+    console.log("Install error!");
+};
 </script>
 </html>
