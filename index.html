@@ -6,7 +6,7 @@
 <link rel="manifest" href="manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3">
+<meta name="viewport" content="width=device-width, user-scalable=no">
 <style>
 body {
   font-family: sans-serif;
@@ -92,14 +92,14 @@ button.delete {
   color: white;
   font-weight: bold;
 }
-button:active, button:hover {
+button:active {
   border-style: inset;
   background: linear-gradient(to bottom, grey, silver);
 }
-button.green:active, button.green:hover {
+button.green:active {
   background: linear-gradient(to bottom, darkgreen, green);
 }
-button.delete:active, button.delete:hover {
+button.delete:active {
   background: linear-gradient(to bottom, darkred, black);
 }
 .hidden {
