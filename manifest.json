@@ -33,5 +33,5 @@
 	"installs_allowed_from": [ "*" ],
 	"appcache_path": "/sincewhen.appcache",
 	"display": "standalone",
-	"fullscreen": true
+	"fullscreen": "true"
 }
