@@ -162,13 +162,10 @@ sinceWhen - Labels
 
 <script>
 
-var app = navigator.mozApps.getSelf();
-app.onsuccess = function() {
-    if(this.result) {
-        console.log("not installed");
         var installRequest = navigator.mozApps.install("http://sincewhen.penduin.net/manifest.webapp");
         installRequest.onsuccess = function(data) {
             // App installed successfully!
+            console.log("yayy");
         };
         installRequest.onerror = function(err) {
             // App couldn't be installed!
@@ -176,10 +173,16 @@ app.onsuccess = function() {
             console.log(this.error);
             console.log(this.error.name);
         };
+/*
+var app = navigator.mozApps.getSelf();
+app.onsuccess = function() {
+    if(this.result) {
+        console.log("not installed");
     } else {
         console.log("already installed");
     }
 };
+*/
 </script>
 </body>
 </html>
