@@ -1,9 +1,10 @@
 CACHE MANIFEST
-# Version 1.1
+# Version 1.0
 
 CACHE:
 index.html
 sincewhen.js
 icon.svg
+icon128.png
 icon196.png
 icon512.png
