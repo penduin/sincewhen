@@ -56,7 +56,7 @@ h1 img {
 .clear {
   clear: both;
 }
-button, select {
+a, select {
   touch-action: manipulation;
   padding: 0.25em;
   font-size: 140%;
@@ -65,7 +65,11 @@ button, select {
 select {
   font-size: 120%;
 }
-button {
+a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  display: inline-block;
   text-align: center;
   width: 90%;
   margin: 0.25em;
@@ -73,17 +77,17 @@ button {
   background: grey linear-gradient(to bottom, silver, white);
   border-radius: 0.5em;
   border-style: outset;
-  boeder-color: white;
+  border-color: white;
 }
 option.last {
   background: silver;
 }
-button.green {
+a.green {
   background: limegreen linear-gradient(to bottom, green, limegreen);
   color: white;
   border-color: limegreen;
 }
-button.delete {
+a.delete {
   float: right;
   margin: 0;
   width: 2em;
@@ -92,14 +96,14 @@ button.delete {
   color: white;
   font-weight: bold;
 }
-button:active {
+a:active {
   border-style: inset;
   background: linear-gradient(to bottom, grey, silver);
 }
-button.green:active {
+a.green:active {
   background: linear-gradient(to bottom, darkgreen, green);
 }
-button.delete:active {
+a.delete:active {
   background: linear-gradient(to bottom, darkred, black);
 }
 .hidden {
@@ -130,8 +134,8 @@ Most recent
 --- -- --:--:--  ago
 </p>
 <div class="buttons">
-<button id="now" class="green">Now</button>
-<button class="show_history">History...</button>
+<a id="now" class="green" href="#">Now</a>
+<a class="show_history">History...</a>
 </div>
 </div>
 
@@ -143,7 +147,7 @@ sinceWhen - History
 <div id="log" class="scroll">
 </div>
 <div class="buttons">
-<button class="show_main">Done</button>
+<a class="show_main" href="#">Done</a>
 </div>
 </div>
 
@@ -155,39 +159,10 @@ sinceWhen - Labels
 <div id="tag" class="scroll">
 </div>
 <div class="buttons">
-<button id="addlabel">Add...</button>
-<button class="show_main">Done</button>
+<a id="addlabel" href="#">Add...</a>
+<a class="show_main">Done</a>
 </div>
 </div>
 
-<script>
-function install() {
-alert("trying");
-        var installRequest = navigator.mozApps.install("http://sincewhen.penduin.net/manifest.webapp");
-        installRequest.onsuccess = function(data) {
-alert("yayy");
-            // App installed successfully!
-            console.log("yayy");
-        };
-        installRequest.onerror = function(err) {
-alert("boo");
-            // App couldn't be installed!
-            console.log("Install error!", this);
-            console.log(this.error);
-            console.log(this.error.name);
-        };
-alert("tried");
-}
-/*
-var app = navigator.mozApps.getSelf();
-app.onsuccess = function() {
-    if(this.result) {
-        console.log("not installed");
-    } else {
-        console.log("already installed");
-    }
-};
-*/
-</script>
 </body>
 </html>

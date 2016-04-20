@@ -16,7 +16,8 @@ function loadlog() {
 	for(i = 0; i < log.length; ++i) {
 		div = document.createElement("div");
 		div.className = "log";
-		button = document.createElement("button");
+		button = document.createElement("a");
+		button.href = "#";
 		button.className = "delete";
 		button.innerHTML = "X";
 		button.title = "Delete item " + i;
@@ -70,7 +71,8 @@ function loadlabels() {
 	for(i = 0; i < tag.length; ++i) {
 		div = document.createElement("div");
 		div.className = "tag";
-		button = document.createElement("button");
+		button = document.createElement("a");
+		button.href = "#";
 		button.className = "delete";
 		button.innerHTML = "X";
 		button.title = "Delete item " + i;
@@ -211,7 +213,7 @@ function load() {
 window.addEventListener("load", function() {
 	load();
 	document.querySelector("#now").addEventListener("click", now);
-	var btns = document.querySelectorAll("button[class^='show_']");
+	var btns = document.querySelectorAll("a[class^='show_']");
 	var i = 0;
 	for(i = 0; i < btns.length; ++i) {
 		btns[i].addEventListener("click", showpage);
