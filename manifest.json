@@ -1,7 +1,20 @@
 {
 	"short_name": "sinceWhen",
 	"name": "sinceWhen",
+	"description": "How long since last time?",
+	"launch_path": "/index.html",
+	"start_url": "/index.html",
 	"icons": [
+		{
+			"src": "icon128.png",
+			"sizes": "128x128",
+			"type": "image/png"
+		},
+		{
+			"src": "icon196.png",
+			"sizes": "196x196",
+			"type": "image/png"
+		},
 		{
 			"src": "icon512.png",
 			"sizes": "512x512",
@@ -13,6 +26,11 @@
 			"type": "image/svg+xml"
 		}
 	],
-	"start_url": "/index.html",
-	"display": "standalone"
+	"developer": {
+		"name": "penduin",
+		"url": "http://penduin.net"
+	},
+	"appcache_path": "/sincewhen.appcache",
+	"display": "standalone",
+	"fullscreen": true
 }
