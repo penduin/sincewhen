@@ -63,17 +63,17 @@ function loadlog() {
 			*/
 			var dat = new Date(log[id].date);
 			input.value = [
-				dat.getUTCFullYear(),
+				dat.getFullYear(),
 				"-",
-				pad(dat.getUTCMonth() + 1, 2),
+				pad(dat.getMonth() + 1, 2),
 				"-",
-				pad(dat.getUTCDate(), 2),
+				pad(dat.getDate(), 2),
 				"T",
-				pad(dat.getUTCHours(), 2),
+				pad(dat.getHours(), 2),
 				":",
-				pad(dat.getUTCMinutes(), 2),
+				pad(dat.getMinutes(), 2),
 				":",
-				pad(dat.getUTCSeconds(), 2)
+				pad(dat.getSeconds(), 2)
 			].join("");
 
 			var sel = document.querySelector("#rectype");
