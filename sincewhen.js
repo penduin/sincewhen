@@ -50,6 +50,7 @@ function loadlog() {
 			console.log(dat, utc, offset);
 			input.value = new Date(dat.valueOf() + offset).toISOString().substring(0, 19);
 			*/
+			/* works in chrome but not fucking mobile chrome
 			var dat = new Date(log[id].date);
 			var local = new Date();
 			local.setUTCFullYear(dat.getFullYear());
@@ -59,6 +60,21 @@ function loadlog() {
 			local.setUTCMinutes(dat.getMinutes());
 			local.setUTCSeconds(dat.getSeconds());
 			input.value = local.toISOString().substring(0, 19);
+			*/
+			var dat = new Date(log[id].date);
+			input.value = [
+				dat.getFullYear(),
+				"-",
+				pad(dat.getMonth() + 1, 2),
+				"-",
+				pad(dat.getDate(), 2),
+				"T",
+				pad(dat.getHours(), 2),
+				":",
+				pad(dat.getMinutes(), 2),
+				":",
+				pad(dat.getSeconds(), 2)
+			].join("");
 
 			var sel = document.querySelector("#rectype");
 			while(sel.firstChild) {
@@ -101,6 +117,7 @@ function set() {
 //	var utc = new Date();
 //	var offset = utc.valueOf() - new Date(utc.toISOString().substring(0, 19)).valueOf();
 //	var date = new Date(dat.valueOf() - offset).toISOString().substring(0, 19);
+/*
 	var local = new Date(document.querySelector("#recdate").value);
 	var date = new Date();
 	date.setFullYear(local.getUTCFullYear());
@@ -109,17 +126,25 @@ function set() {
 	date.setHours(local.getUTCHours());
 	date.setMinutes(local.getUTCMinutes());
 	date.setSeconds(local.getUTCSeconds());
+*/
+	var str = document.querySelector("#recdate").value;
+	var date = new Date();
+	// "0123-56-89T12:45:78"
+	date.setFullYear(str.substring(0, 4));
+	date.setMonth(parseInt(str.substring(5, 7) - 1, null));
+	date.setDate(str.substring(8, 10));
+	date.setHours(str.substring(11, 13));
+	date.setMinutes(str.substring(14, 16));
+	date.setSeconds(str.substring(17, 19));
 
 	var data = {
 		date: date,
 		label: document.querySelector("#rectype").value
 	};
 	log.splice(editing, 1, data);
-	console.log(log);
 	log = log.sort(function(a, b) {
 		return new Date(a.date) - new Date(b.date);
 	});
-	console.log(log);
 	localStorage.setItem("sincewhen_log", JSON.stringify(log));
 	load();
 	showpage({target: {className: "show_history"}});
@@ -273,7 +298,7 @@ function now() {
 
 function showpage(e) {
 	var show = e.target.className.replace("show_", "");
-	console.log("showpage", show);
+	//console.log("showpage", show);
 	var pages = document.querySelectorAll(".page");
 	var i = 0;
 	for(i = 0; i < pages.length; ++i) {
