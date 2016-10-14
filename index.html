@@ -4,10 +4,10 @@
 <link rel="icon" sizes="196x196" href="icon196.png">
 <link rel="apple-touch-icon" href="icon196.png">
 <link rel="manifest" href="manifest.json">
+<meta name="viewport" content="width=device-width, user-scalable=no">
 <meta name="theme-color" content="#aaa">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="viewport" content="width=device-width, user-scalable=no">
 <style>
 body {
   font-family: sans-serif;
@@ -88,16 +88,22 @@ a.green {
   color: white;
   border-color: limegreen;
 }
-a.delete {
+a.delete, a.edit {
   float: right;
   margin: 0;
-  width: 2em;
+  width: 1.5em;
   background: red linear-gradient(to bottom, darkred, red);
   border-color: red;
   color: white;
   font-weight: bold;
 }
-a:active, a:hover, a:touch {
+a.edit {
+  background: grey linear-gradient(to bottom, silver, white);
+  color: black;
+  border-color: white;
+  margin-right: 0.25em;
+}
+a:active {
   border-style: inset;
   background: linear-gradient(to bottom, grey, silver);
 }
@@ -106,6 +112,10 @@ a.green:active {
 }
 a.delete:active {
   background: linear-gradient(to bottom, darkred, black);
+}
+a.edit:active {
+  border-style: inset;
+  background: linear-gradient(to bottom, grey, silver);
 }
 .hidden {
   display: none;
@@ -150,6 +160,20 @@ sinceWhen - History
 <div class="buttons">
 <a class="show_main" href="#">Done</a>
 </div>
+</div>
+
+<div id="edit" class="page hidden">
+  <h1>
+	<img src="icon512.png">
+	sinceWhen - Edit record
+  </h1>
+  <input id="recdate" type="datetime">
+  <br><br>
+  <select id="rectype"></select>
+  <div class="buttons">
+	<a id="set" class="green" href="#">Set</a>
+	<a class="show_history">Cancel</a>
+  </div>
 </div>
 
 <div id="labels" class="page hidden">

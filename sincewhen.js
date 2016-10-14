@@ -1,4 +1,5 @@
 var timer = null;
+var editing = null;
 
 function loadlog() {
 	var log = [];
@@ -16,6 +17,8 @@ function loadlog() {
 	for(i = 0; i < log.length; ++i) {
 		div = document.createElement("div");
 		div.className = "log";
+
+		// delete
 		button = document.createElement("a");
 		button.href = "#";
 		button.className = "delete";
@@ -28,6 +31,36 @@ function loadlog() {
 			load();
 		});
 		div.appendChild(button);
+
+		// edit
+		button = document.createElement("a");
+		button.href = "#";
+		button.className = "edit";
+		button.innerHTML = "&hellip;";
+		button.title = "Edit item " + i;
+		button.addEventListener("click", function(e) {
+			var id = parseInt(e.target.title.replace("Edit item ", ""), null);
+			editing = id;
+			var input = document.querySelector("#recdate");
+			input.value = log[id].date;
+			var sel = document.querySelector("#rectype");
+			while(sel.firstChild) {
+				sel.removeChild(sel.firstChild);
+			}
+			var lbls = document.querySelectorAll("#type option.custom");
+			var option = document.createElement("option");
+			option.value = "";
+			option.innerHTML = "(no label)";
+			sel.appendChild(option);
+			for(i = 0; i < lbls.length; ++i) {
+				option = lbls.item(i).cloneNode(true);
+				option.selected = (log[id].label === option.value);
+				sel.appendChild(option);
+			}
+			showpage({target: {className: "show_edit"}});
+		});
+		div.appendChild(button);
+
 		date = new Date(log[i].date);
 		div.appendChild(document.createTextNode(date.toLocaleString()));
 		div.appendChild(document.createElement("br"));
@@ -42,6 +75,23 @@ function loadlog() {
 	}
 
 	return log;
+}
+
+function set() {
+	var log = JSON.parse(localStorage.getItem("sincewhen_log") || "[]");
+	var data = {
+		date: new Date(document.querySelector("#recdate").value),
+		label: document.querySelector("#rectype").value
+	};
+	log.splice(editing, 1, data);
+	console.log(log);
+	log = log.sort(function(a, b) {
+		return new Date(a.date) - new Date(b.date);
+	});
+	console.log(log);
+	localStorage.setItem("sincewhen_log", JSON.stringify(log));
+	load();
+	showpage({target: {className: "show_history"}});
 }
 
 function addlog(item) {
@@ -213,6 +263,7 @@ function load() {
 window.addEventListener("load", function() {
 	load();
 	document.querySelector("#now").addEventListener("click", now);
+	document.querySelector("#set").addEventListener("click", set);
 	var btns = document.querySelectorAll("a[class^='show_']");
 	var i = 0;
 	for(i = 0; i < btns.length; ++i) {
