@@ -42,7 +42,7 @@ function loadlog() {
 			var id = parseInt(e.target.title.replace("Edit item ", ""), null);
 			editing = id;
 			var input = document.querySelector("#recdate");
-			input.value = log[id].date;
+			input.value = new Date(log[id].date).toISOString().substring(0, 19);
 			var sel = document.querySelector("#rectype");
 			while(sel.firstChild) {
 				sel.removeChild(sel.firstChild);
