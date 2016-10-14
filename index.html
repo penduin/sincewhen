@@ -4,9 +4,10 @@
 <link rel="icon" sizes="196x196" href="icon196.png">
 <link rel="apple-touch-icon" href="icon196.png">
 <link rel="manifest" href="manifest.json">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<meta name="theme-color" content="#aaa">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="viewport" content="width=device-width, user-scalable=no">
 <style>
 body {
   font-family: sans-serif;
@@ -56,7 +57,7 @@ h1 img {
 .clear {
   clear: both;
 }
-button, select {
+a, select {
   touch-action: manipulation;
   padding: 0.25em;
   font-size: 140%;
@@ -65,42 +66,56 @@ button, select {
 select {
   font-size: 120%;
 }
-button {
+a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  display: inline-block;
   text-align: center;
-  width: 90%;
+  width: 85%;
   margin: 0.25em;
-  max-width: 70vh;
+  max-width: 65vh;
   background: grey linear-gradient(to bottom, silver, white);
   border-radius: 0.5em;
   border-style: outset;
-  boeder-color: white;
+  border-color: white;
 }
 option.last {
   background: silver;
 }
-button.green {
+a.green {
   background: limegreen linear-gradient(to bottom, green, limegreen);
   color: white;
   border-color: limegreen;
 }
-button.delete {
+a.delete, a.edit {
   float: right;
   margin: 0;
-  width: 2em;
+  width: 1.5em;
   background: red linear-gradient(to bottom, darkred, red);
   border-color: red;
   color: white;
   font-weight: bold;
 }
-button:active {
+a.edit {
+  background: grey linear-gradient(to bottom, silver, white);
+  color: black;
+  border-color: white;
+  margin-right: 0.25em;
+}
+a:active {
   border-style: inset;
   background: linear-gradient(to bottom, grey, silver);
 }
-button.green:active {
+a.green:active {
   background: linear-gradient(to bottom, darkgreen, green);
 }
-button.delete:active {
+a.delete:active {
   background: linear-gradient(to bottom, darkred, black);
+}
+a.edit:active {
+  border-style: inset;
+  background: linear-gradient(to bottom, grey, silver);
 }
 .hidden {
   display: none;
@@ -111,8 +126,8 @@ button.delete:active {
 <body>
 
 <div id="main" class="page">
-<h1>
-<img src="icon196.png">
+<h1 ontouchstart="alert('sigh');">
+<img src="icon196.png" ontouchstart="install();">
 sinceWhen
 </h1>
 <p>
@@ -130,8 +145,8 @@ Most recent
 --- -- --:--:--  ago
 </p>
 <div class="buttons">
-<button id="now" class="green">Now</button>
-<button class="show_history">History...</button>
+<a id="now" class="green" href="#">Now</a>
+<a class="show_history">History...</a>
 </div>
 </div>
 
@@ -143,8 +158,22 @@ sinceWhen - History
 <div id="log" class="scroll">
 </div>
 <div class="buttons">
-<button class="show_main">Done</button>
+<a class="show_main" href="#">Done</a>
 </div>
+</div>
+
+<div id="edit" class="page hidden">
+  <h1>
+	<img src="icon512.png">
+	sinceWhen - Edit record
+  </h1>
+  <input id="recdate" type="datetime">
+  <br><br>
+  <select id="rectype"></select>
+  <div class="buttons">
+	<a id="set" class="green" href="#">Set</a>
+	<a class="show_history">Cancel</a>
+  </div>
 </div>
 
 <div id="labels" class="page hidden">
@@ -155,23 +184,10 @@ sinceWhen - Labels
 <div id="tag" class="scroll">
 </div>
 <div class="buttons">
-<button id="addlabel">Add...</button>
-<button class="show_main">Done</button>
+<a id="addlabel" href="#">Add...</a>
+<a class="show_main">Done</a>
 </div>
 </div>
 
 </body>
-<script>
-alert("trying");
-var installRequest = navigator.mozApps.install("http://sincewhen.penduin.net/manifest.webapp");
-installRequest.onsuccess = function(data) {
-alert("yayy");
-    // App installed successfully!
-};
-installRequest.onerror = function(err) {
-alert("boo");
-    // App couldn't be installed!
-    console.log("Install error!");
-};
-</script>
 </html>
