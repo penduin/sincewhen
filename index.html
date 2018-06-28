@@ -103,6 +103,11 @@ a.edit {
   border-color: white;
   margin-right: 0.25em;
 }
+a.half {
+width: 30%;
+font-size: 80%;
+line-height: 2em;
+}
 a:active {
   border-style: inset;
   background: linear-gradient(to bottom, grey, silver);
@@ -159,7 +164,11 @@ sinceWhen - History
 <div id="log" class="scroll">
 </div>
 <div class="buttons">
-<a class="show_main" href="#">Done</a>
+  <a class="hidden downloaddata" download="sincewhen-backup.txt" href="#"></a>
+  <input class="hidden uploaddata" type="file">
+  <a class="save half" href="#">Save Backup</a>
+  <a class="restore half" href="#">Restore Backup</a>
+  <a class="show_main" href="#">Done</a>
 </div>
 </div>
 

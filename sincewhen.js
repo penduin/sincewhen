@@ -307,6 +307,51 @@ function showpage(e) {
 	document.querySelector("#" + show).classList.remove("hidden");
 }
 
+function backup() {
+	var value = {
+		sincewhen_tag: localStorage.getItem("sincewhen_tag") || "[]",
+		sincewhen_filter: localStorage.getItem("sincewhen_filter") || "",
+		sincewhen_log: localStorage.getItem("sincewhen_log") || "[]"
+	};
+	var a = document.querySelector(".downloaddata");
+	if(typeof btoa !== 'undefined') {
+		//var conv = btoa(this.value);
+		var enc = encodeURIComponent(JSON.stringify(value, null, 4));
+		var conv = btoa(enc.replace(/%([0-9A-F]{2})/g, function(match, p1) {
+			return String.fromCharCode(parseInt(p1, 16))
+		}));
+		a.href = "data:text/plain;base64," + conv;
+	}
+	a.click();
+}
+function restore() {
+	document.querySelector("input.uploaddata").click();
+}
+function upload(e) {
+	var reader = new FileReader();
+	var fallback = {
+		sincewhen_tag: localStorage.getItem("sincewhen_tag") || "[]",
+		sincewhen_filter: localStorage.getItem("sincewhen_filter") || "",
+		sincewhen_log: localStorage.getItem("sincewhen_log") || "[]"
+	};
+	reader.addEventListener("load", function(e) {
+		try {
+			var value = JSON.parse(e.target.result);
+			localStorage.setItem("sincewhen_tag", value.sincewhen_tag || "[]");
+			localStorage.setItem("sincewhen_filter", value.sincewhen_filter || "");
+			localStorage.setItem("sincewhen_log", value.sincewhen_log || "[]");
+			alert("Restored successfully.");
+			load();
+		} catch(e) {
+			localStorage.setItem("sincewhen_tag", fallback.sincewhen_tag || "[]");
+			localStorage.setItem("sincewhen_filter", fallback.sincewhen_filter || "");
+			localStorage.setItem("sincewhen_log", fallback.sincewhen_log || "[]");
+			alert("Restore failed; data left alone.\n" + e);
+		}
+	});
+	reader.readAsText(this.files[0]);
+}
+
 function load() {
 	var log = loadlog();
 	var filt = localStorage.getItem("sincewhen_filter") || "";
@@ -333,6 +378,9 @@ window.addEventListener("load", function() {
 	for(i = 0; i < btns.length; ++i) {
 		btns[i].addEventListener("click", showpage);
 	}
+	document.querySelector("a.save").addEventListener("click", backup);
+	document.querySelector("a.restore").addEventListener("click", restore);
+	document.querySelector("input.uploaddata").addEventListener("change", upload);
 
 	document.querySelector("#type").addEventListener("change", picklabel);
 	document.querySelector("#addlabel").addEventListener("click", addlabel);
